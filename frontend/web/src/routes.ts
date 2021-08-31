@@ -22,7 +22,7 @@ const routes = {
     // '/student' : Registration,
     '/qr/:code' : GetQRCode,
     // '/stat/:code': Stat,
-     '/list/:code' : List,
+     '/hihetetlen/mik/list/:code' : List,
     '/hihetetlen/mik/csippanto' : QRScanner,
     // '/registration': StudentRegTNY
 }
