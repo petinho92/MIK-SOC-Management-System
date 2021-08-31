@@ -1,0 +1,238 @@
+{% extends('@smartpage/smartpage.twig') %}
+
+{% block head %}
+    {{ parent() }}
+    <style>
+        .select, .select select{
+            width: 100%;
+        }
+
+        .box{
+            background-color: #1f68c4;
+            box-shadow: 5px 10px rgba(125, 131, 255, 0.93);
+            color: white;
+        }
+        .label
+        {
+            color:white;
+        }
+    </style>
+
+{% endblock %}
+
+
+{% block content %}
+    {% include 'elements/menu.twig' %}
+
+    {% set szakok = {
+        '1':'Építészmérnöki (BSc)',
+        '2':'Építőmérnöki (BSc)',
+        '3':'Építőművészet (BA)',
+        '4':'Gépészmérnöki (BSc)',
+        '5':'Ipari termék- és formatervező mérnöki (BSc)',
+        '6':'Környezetmérnöki (BSc)',
+        '7':'Mérnökinformatikus (BSc)',
+        '8':'Villamosmérnöki (BSc)',
+        '9':'Belsőépítész tervezőművész (MA)',
+        '10':'Egészségügyi mérnök (MSc)',
+        '11':'Építész (MSc)',
+        '12':'Építőművész (MA)',
+        '13':'Gépészmérnöki (MSc)',
+        '14':'Mérnökinformatikus (MSc)',
+        '15':'Szerkezet-építőmérnöki (MSc)',
+        '16':'Településmérnöki (MSc)',
+        '17':'Breuer Marcell Doktori Iskola',
+        '18':'Műszaki felsőoktatási szakképzés (FOKSZ)',
+        '19':'Televíziós műsorkészítő (FOKSZ)',
+        '20':'Építészmérnöki osztatlan',
+        '21':'BIM szakmérnök',
+        '22':'Atomerőművi üzemeltetési szakember',
+        '23':'Atomerőművi üzemeltetési szakmérnök',
+        '24':'Hulladékgazdálkodási szakmérnök / műszaki szakember',
+        '25':'Létesítmény-energetikai szakmérnök',
+        '26':'Minőségirányítási rendszermenedzser',
+        '27':'Nukleáris környezetvédelmi szakmérnök / szakember',
+        '28':'Történeti épületdiagnosztikai és rehabilitációs szakmérnök / szakember',
+        '29':'Városüzemeltető szakmérnök',
+        '30':'Vizuális mediátor, iskolai designer',
+        '31':'Zaj- és rezgésvédelmi szakmérnök / szakember'
+    } %}
+
+    {% set checkboxes_plan1 = {
+        '0' : 'Plenáris előadások',
+        '1' : 'MI, VR, Cloud megoldások',
+        '2' : 'Szoftverfejlesztés, üzleti alkalmazások',
+        '3' : 'Korszerű tervezési technikák és környezettudatos építés',
+        '4' : 'Modern infrastruktúra-új kihívások',
+        '5' : 'Modern méréstechnika és jelfeldolgozás',
+        '6' : 'Kötés- és gyártástechnológiák',
+        '7' : 'Épületgépészeti irányítástechnika -Vinkler Károly Emlékülés',
+        '8' : 'Energiatárolás és hidrogéntechnológiák',
+        '9' : 'Digitalizált építőipari értéklánc'
+    } %}
+    {% set checkboxes_plan2 = {
+        '0' : 'Alkalmazott informatika',
+        '1' : 'Építész szekció',
+        '2' : 'SUSTAINABILITY PRINCIPLES IN CIVIL ENGINEERING',
+        '3' : 'Alternatív tüzelőanyagok',
+        '4' : 'Innovatív fejlesztések a gépgyártásban',
+        '5' : 'Energiatudatos épületgépészet',
+        '6' : 'Energiatárolás és hidrogéntechnológiák',
+        '7' : 'Vizualizációs trendek: 3D, VR, AR',
+        '8' : 'Munkavédelem'
+    } %}
+
+
+    <section class="section">
+        <h1 class="title">Hallgatói regisztráció</h1>
+        <h2 class="subtitle">
+            A simple container to divide your page into <strong>sections</strong>, like the one you're currently
+            reading.
+        </h2>
+    </section>
+
+
+    <form id="studentForm" method="POST" action="successful">
+        <div class="columns is-tablet">
+            <div class="column is-one-quarter "></div>
+            <div class="column custom-color">
+                <div class="box">
+                    <div class="field">
+                        <label class="label">Név</label>
+                        <div class="control ">
+                            <input class="input " type="text" placeholder="Név" required name="name">
+                            {# <p class="help is-danger">Név megadása kötelező!</p> #}
+                            <span class="icon is-small is-left">
+            <i class="fas fa-user"></i>
+            </span>
+
+                            <span class="icon is-small is-right">
+            <i class="fas fa-check"></i>
+            </span>
+
+                        </div>
+
+                    </div>
+                    <div class="field">
+                        <label class="label">Neptunkód</label>
+                        <div class="control">
+                            <input class="input " type="text" placeholder="abcdef" required name="neptun">
+                            {# <p class="help is-danger">Neptunkód megadása kötelező!</p> #}
+                            <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+            </span>
+                            <span class="icon is-small is-right">
+            <i class="fas fa-exclamation-triangle"></i>
+            </span>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Szak</label>
+                        <div class="control">
+                            <div class="select">
+
+                                <select name="szak" class="full-width">
+
+                                    {% for szak in szakok %}
+                                        <option class="full-width">{{ szak }}</option>
+                                    {% endfor %}
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Szemeszter</label>
+                        <div class="control">
+                            <div class="select">
+                                <select name="semester">
+                                    {% for i in range(1, 20) %}
+                                    <option name="semester{{ i }}" value="{{ i }}">{{ i }}. szemeszter</option>
+                                    {% endfor %}
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Email</label>
+                        <div class="control ">
+                            <input class="input " type="email" placeholder="example@example.com" name="email">
+                            {# <p class="help is-danger">Email cím megadása kötelező!</p> #}
+                            <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+            </span>
+                            <span class="icon is-small is-right">
+            <i class="fas fa-exclamation-triangle"></i>
+            </span>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Telefonszám</label>
+                        <div class="control ">
+                            <input class="input " type="text" placeholder="+36301234567" name="mobile">
+                            {# <p class="help is-danger">Telefonszám megadása kötelező!</p> #}
+                            <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+            </span>
+                            <span class="icon is-small is-right">
+            <i class="fas fa-exclamation-triangle"></i>
+            </span>
+                        </div>
+                    </div>
+
+                    <label class="label">Az alábbi szekciók érdekelnek</label>
+                    <br>
+                    <label class="label">12.30-14.30</label>
+                    <div class="control is-grouped">
+                        {% for checkbox in checkboxes_plan1 %}
+                            <p class="control">
+                                <label class="checkbox">
+                                    <input type="checkbox" value="{{ checkbox }}" name="plen1_{{ loop.index }}"/>
+                                        {{ checkbox }}
+                                </label>
+                            </p>
+                        {% endfor %}
+
+
+                    </div>
+                    <br>
+                    <label class="label">15.00-17.00</label>
+                    <div class="control is-grouped">
+                        {% for checkbox in checkboxes_plan2 %}
+                            <p class="control">
+                                <label class="checkbox">
+                                    <input type="checkbox" value="{{ checkbox }}" name="plen2_{{ loop.index }}"/>
+                                    {{ checkbox }}
+                                </label>
+                            </p>
+                        {% endfor %}
+                    </div>
+                    <br>
+                    <div class="field pt-3">
+                        <div class="control">
+                            <label class="checkbox">
+                                <input type="checkbox" required name="topsecret">
+                                Elfogadom az <a href="#">adatkezelési tájékoztatóban leírtakat.</a>
+                            </label>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <div class="field is-grouped pt-5">
+                    <div class="control">
+                        <button class="button submit" name="regButton" value="">Regisztrálok</button>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-one-quarter"></div>
+        </div>
+    </form>
+
+
+
+
+{% endblock %}

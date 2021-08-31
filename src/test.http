@@ -1,0 +1,4 @@
+GET http://thanos.localhost:8080/get/qr/MIK51-student-263-5be164ef006b27adc41690096165fee5
+Accept: application/json
+Authorization: Basic a a
+###

@@ -1,0 +1,130 @@
+{% extends('@smartpage/smartpage.twig') %}
+
+{% block head %}
+    {{ parent() }}
+    <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+
+{% endblock %}
+
+
+{% block content %}
+    {% include 'elements/menu.twig' %}
+    <h1>Sikeres regisztráció</h1>
+
+    <section class="hero is-primary is-fullheight">
+        <form method="post">
+        <div class="hero-body">
+            <div class="container is-centered">
+                <div class="columns is-centered">
+                    <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+                        <div class="box2">Regisztráció adatai</div>
+                        <h3>Személyes adatok</h3>
+                        <hr>
+                        <div class="field">
+                            <label class="label">Név<span>*</span></label>
+                            <div class="control ">
+                                {{ name }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Neptunkód<span>*</span></label>
+                            <div class="control">
+                                {{ neptun }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Szak<span>*</span></label>
+                            <div class="control">
+                                {{ szak }}
+
+
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Szemeszter<span>*</span></label>
+                            <div class="control">
+                                {{ semester }}. szemeszter
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Email<span>*</span></label>
+                            <div class="control ">
+                                {{ email }}
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Telefonszám<span>*</span></label>
+                            <div class="control ">
+                                {{ mobile }}
+                            </div>
+                        </div>
+
+                        <h3>Az alábbi szekciók érdekelnek</h3>
+                        <hr>
+                        <label class="label">12.30-14.30</label>
+                        <div class="control is-grouped">
+                            {% for plen in plen1 %}
+                                <p>{{ plen}}</p>
+                            {% endfor %}
+                        </div>
+                        <hr>
+                        <label class="label">15.00-17.00</label>
+                        <div class="control is-grouped">
+                            <div class="control is-grouped">
+                                {% for plen in plen2 %}
+                                    <p>{{ plen}}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="field pt-3">
+                            <div class="control">
+                                <label class="checkbox">
+                                    <input type="checkbox" required name="topsecret" checked disabled>
+                                    Elfogadom az <a href="#">adatkezelési tájékoztatóban leírtakat.</a>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="field is-grouped pt-5">
+                                <div class="control">
+                                    <button class="button submit" name="regButton" value="">Regisztrálok</button>
+                                    <button class="button submit" name="regButton" value="">Javítok</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </section>
+
+    <div id="canvas"></div>
+
+    <script type="text/javascript">
+        const qrCode = new QRCodeStyling({
+            width: 300,
+            height: 300,
+            type: "svg",
+            data: "{{ mixedneptun }}",
+            // image: "https://mik.pte.hu/img/mik_favico.png",
+            dotsOptions: {
+                color: "#4267b2",
+                type: "rounded"
+            },
+            backgroundOptions: {
+                color: "#e9ebee",
+            },
+            imageOptions: {
+                crossOrigin: "anonymous",
+                margin: 20
+            }
+        });
+
+        qrCode.append(document.getElementById("canvas"));
+    </script>
+{% endblock %}

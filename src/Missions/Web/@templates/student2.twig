@@ -1,0 +1,262 @@
+{% extends('@smartpage/smartpage.twig') %}
+
+{% block head %}
+    {{ parent() }}
+    <style>
+        .select, .select select{
+            width: 100%;
+        }
+        /*.box{
+           min-width: 100%;
+        }
+        form{
+            width: 600px;
+            margin: auto;
+        }*/
+        .box{
+            width: 600px;
+        }
+        .box h3
+        {
+            color: #575656;
+            font-size: large;
+            text-align: center;
+            padding-top: 30px;
+            font-family: "OCR A Std", monospace;
+        }
+        .box2{
+            background-color: #1f68c4;
+            width:100%;
+            min-height: 30px;
+            color: white;
+            text-align: center;
+            text-decoration-style: dashed;
+            padding-top: 3px;
+        }
+        span{
+            color: red;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted black;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            top: -5px;
+            left: 110%;
+        }
+
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 100%;
+            margin-top: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent black transparent transparent;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
+
+
+    </style>
+
+{% endblock %}
+
+{% block content %}
+    {% include 'elements/menu.twig' %}
+
+    {% set szakok = {
+        '1':'Építészmérnöki (BSc)',
+        '2':'Építőmérnöki (BSc)',
+        '3':'Építőművészet (BA)',
+        '4':'Gépészmérnöki (BSc)',
+        '5':'Ipari termék- és formatervező mérnöki (BSc)',
+        '6':'Környezetmérnöki (BSc)',
+        '7':'Mérnökinformatikus (BSc)',
+        '8':'Villamosmérnöki (BSc)',
+        '9':'Belsőépítész tervezőművész (MA)',
+        '10':'Egészségügyi mérnök (MSc)',
+        '11':'Építész (MSc)',
+        '12':'Építőművész (MA)',
+        '13':'Gépészmérnöki (MSc)',
+        '14':'Mérnökinformatikus (MSc)',
+        '15':'Szerkezet-építőmérnöki (MSc)',
+        '16':'Településmérnöki (MSc)',
+        '17':'Breuer Marcell Doktori Iskola',
+        '18':'Műszaki felsőoktatási szakképzés (FOKSZ)',
+        '19':'Televíziós műsorkészítő (FOKSZ)',
+        '20':'Építészmérnöki osztatlan',
+        '21':'BIM szakmérnök',
+        '22':'Atomerőművi üzemeltetési szakember',
+        '23':'Atomerőművi üzemeltetési szakmérnök',
+        '24':'Hulladékgazdálkodási szakmérnök / műszaki szakember',
+        '25':'Létesítmény-energetikai szakmérnök',
+        '26':'Minőségirányítási rendszermenedzser',
+        '27':'Nukleáris környezetvédelmi szakmérnök / szakember',
+        '28':'Történeti épületdiagnosztikai és rehabilitációs szakmérnök / szakember',
+        '29':'Városüzemeltető szakmérnök',
+        '30':'Vizuális mediátor, iskolai designer',
+        '31':'Zaj- és rezgésvédelmi szakmérnök / szakember'
+    } %}
+
+    {% set checkboxes_plan1 = {
+        '0' : 'Plenáris előadások',
+        '1' : 'MI, VR, Cloud megoldások',
+        '2' : 'Szoftverfejlesztés, üzleti alkalmazások',
+        '3' : 'Korszerű tervezési technikák és környezettudatos építés',
+        '4' : 'Modern infrastruktúra-új kihívások',
+        '5' : 'Modern méréstechnika és jelfeldolgozás',
+        '6' : 'Kötés- és gyártástechnológiák',
+        '7' : 'Épületgépészeti irányítástechnika -Vinkler Károly Emlékülés',
+        '8' : 'Energiatárolás és hidrogéntechnológiák',
+        '9' : 'Digitalizált építőipari értéklánc'
+    } %}
+    {% set checkboxes_plan2 = {
+        '0' : 'Alkalmazott informatika',
+        '1' : 'Építész szekció',
+        '2' : 'SUSTAINABILITY PRINCIPLES IN CIVIL ENGINEERING',
+        '3' : 'Alternatív tüzelőanyagok',
+        '4' : 'Innovatív fejlesztések a gépgyártásban',
+        '5' : 'Energiatudatos épületgépészet',
+        '6' : 'Energiatárolás és hidrogéntechnológiák',
+        '7' : 'Vizualizációs trendek: 3D, VR, AR',
+        '8' : 'Munkavédelem'
+    } %}
+
+    <section class="section">
+        <h1 class="title">Hallgatói regisztráció</h1>
+        <h2 class="subtitle">
+            A simple container to divide your page into <strong>sections</strong>, like the one you're currently
+            reading.
+        </h2>
+    </section>
+
+
+    <section class="hero is-primary is-fullheight">
+        <div class="hero-body">
+            <div class="container is-centered">
+                <div class="columns is-centered">
+                    <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+                        <form id="studentForm" method="POST" action="checking" class="box">
+                            <div class="box2">Regisztráció</div>
+                            <h3>Személyes adatok</h3>
+                            <hr>
+                            <div class="field">
+                                <label class="label">Név<span>*</span></label>
+                                <div class="control ">
+                                    <input class="input" type="text" placeholder="Név" required name="name">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Neptunkód<span>*</span></label>
+                                <div class="control">
+                                    <input class="input " type="text" placeholder="abcdef" required name="neptun">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Szak<span>*</span></label>
+                                <div class="control">
+                                    <div class="select">
+                                        <select name="szak" class="full-width">
+                                            {% for szak in szakok %}
+                                                <option class="full-width">{{ szak }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Szemeszter<span>*</span></label>
+                                <div class="control">
+                                    <div class="select">
+                                        <select name="semester">
+                                            {% for i in range(1, 20) %}
+                                                <option name="semester{{ i }}" value="{{ i }}">{{ i }}. szemeszter</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <div class="tooltip"> <label class="label">Email<span>*</span></label>
+                                    <span class="tooltiptext">Erre az email címre küldi el a rendszer a regisztrációt.</span>
+                                </div>
+
+                                <div class="control ">
+                                    <input class="input " type="email" placeholder="example@example.com" name="email">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">Telefonszám<span>*</span></label>
+                                <div class="control ">
+                                    <input class="input " type="text" placeholder="+36301234567" name="mobile">
+                                </div>
+                            </div>
+
+                            <h3>Az alábbi szekciók érdekelnek</h3>
+                            <hr>
+                            <label class="label">12.30-14.30</label>
+                            <div class="control is-grouped">
+                                {% for checkbox in checkboxes_plan1 %}
+                                    <p class="control">
+                                        <label class="checkbox">
+                                            <input type="checkbox" class="checkboxInput" value="{{ checkbox }}" name="plen1[]"/>
+                                            {{ checkbox }}
+                                        </label>
+                                    </p>
+                                {% endfor %}
+                            </div>
+                            <hr>
+                            <label class="label">15.00-17.00</label>
+                            <div class="control is-grouped">
+                                {% for checkbox in checkboxes_plan2 %}
+                                    <p class="control">
+                                        <label class="checkbox">
+                                            <input type="checkbox" value="{{ checkbox }}" name="plen2[]"/>
+                                            {{ checkbox }}
+                                        </label>
+                                    </p>
+                                {% endfor %}
+                            </div>
+                            <hr>
+                            <div class="field pt-3">
+                                <div class="control">
+                                    <label class="checkbox">
+                                        <input type="checkbox" required name="topsecret">
+                                        Elfogadom az <a href="#">adatkezelési tájékoztatóban leírtakat.</a>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                    <div class="field is-grouped pt-5">
+                                        <div class="control">
+                                            <button class="button submit" name="regButton" value="">Regisztrálok</button>
+                                        </div>
+                                    </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
